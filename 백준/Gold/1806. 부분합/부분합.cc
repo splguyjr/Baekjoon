@@ -4,32 +4,29 @@
 using namespace std;
 
 int n, s;
-int num[100001];
+int arr[100001];
 int sum = 0;
-int p1 = 0, p2 = 0, cnt = 0;
-int ans=100000;
+int p1 = 0, p2 = 0;
+int ans = 100001;
 
 int main() {
 	cin >> n >> s;
-	
-	for (int i = 0; i < n; i++) {
-		cin >> num[i];
-	}
 
-	while (p2 <= n && ans != 1) {
-		
+	for (int i = 0; i < n; i++) cin >> arr[i];
+
+	while (p1 <= p2 && p2 <= n) {
 		if (sum < s) {
-			sum += num[p2];
-			p2++; cnt++; continue;
+			sum += arr[p2++];
 		}
+
 		else {
-			ans = min(ans, cnt);
-			sum -= num[p1];
-			p1++; cnt--;
+			ans = min(ans, p2 - p1);
+			sum -= arr[p1++];
 		}
+		
 	}
 
-	if (ans == 100000) {
+	if (ans == 100001) {
 		cout << 0;
 		return 0;
 	}
