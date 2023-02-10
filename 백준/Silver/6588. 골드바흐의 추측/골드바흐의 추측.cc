@@ -1,39 +1,52 @@
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
-bool prime(int input) {
-	for(int i =2; i<=sqrt(input); i++) {
-		if(input %i==0) return false;
+int memo[1000001]; // 1이면 합성수
+
+void prime() {
+	for (int i = 2; i * i <= 1000000; i++) {
+		if (memo[i] == 1) continue;
+			
+		for (int j = i * i; j <= 1000000; j += i) {
+			memo[j] = 1;
+		}
 	}
-	return true;
 }
 
 int main() {
-	
+	ios::sync_with_stdio(false);
 	cin.tie(NULL);
-    cout.tie(NULL);
-	ios_base :: sync_with_stdio(false);
-	int n =1;
-	int a,b;
-	
-	while(n) {
+	cout.tie(NULL);
+
+	int n = 1;
+	int a, b;
+
+	prime();
+
+	while (n) {
 		cin >> n;
-		for(int i=1; i<n/2; i++) {
-			
+
+		for (int i = 1; i < n / 2; i++) {
+
 			a = 2 * i + 1;
-			b = n-a;
-			
-			if(prime(a) && prime(b)) {
-				cout << n << " = " << a << " + " << b << '\n';
+			b = n - a;
+
+			if (!memo[a]) {
+				{
+					if (!memo[b]) {
+						cout << n << " = " << a << " + " << b << '\n';
+
+						break;
+
+					}
+				}
 				
-				break;
 			}
-		
+
 		}
-		
-		
-	
-}
+
+	}
 
 }
