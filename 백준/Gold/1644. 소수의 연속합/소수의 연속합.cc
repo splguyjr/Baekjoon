@@ -40,28 +40,20 @@ int main() {
 		if (!prime[i]) v.push_back(i);
 	}
 
-	while(p2 < v.size()) {
+	while(1) {
 
-	if (sum < n) {
-		sum += v[p2++];
-	}
-	else if (sum >= n) {
-		if (sum == n) {
-			cnt++;
-			sum += v[p2++];
+		if (sum >= n) {
+			if (sum == n) cnt++;
 			sum -= v[p1++];
-			continue;
 		}
-		sum -= v[p1++];
-	}
+		else if (p2 == v.size()) break; //이미 끝까지 다 더했을 경우 탈출
 
+		else {
+			sum += v[p2++];
+		}
 
 	}
 	
-	if (sum - v[p1] == n) {
-		cnt++;
-	}
-
 
 	cout << cnt;
 
