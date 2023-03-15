@@ -17,14 +17,17 @@ int main() {
 		cin >> day[i] >> pay[i];
 	}
 
-	for (int i = 1; i <= n; i++) {
-
-
-		dp[i + day[i]] = max(dp[i]+ pay[i], dp[i + day[i]]);
-		dp[i + 1] = max(dp[i], dp[i + 1]);
-
+	for (int i = n; i >= 1; i--) {
+		if (i + day[i] <= n + 1) {
+			dp[i] = max(dp[i+day[i]] + pay[i], dp[i+1]);
+		}
+		else {
+			dp[i] = dp[i + 1];
+		}
 
 	}
 
-	cout << dp[n + 1];
+	cout << dp[1];
+
+	return 0;
 }
