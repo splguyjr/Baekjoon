@@ -8,7 +8,9 @@ int day[1500001];
 int pay[1500001];
 int dp[1500001];
 int main() {
-	
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+
 	cin >> n;
 
 	for (int i = 1; i <= n; i++) {
