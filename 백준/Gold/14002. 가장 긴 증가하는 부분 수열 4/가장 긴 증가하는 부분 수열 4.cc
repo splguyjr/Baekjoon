@@ -39,7 +39,7 @@ int main() {
 				}
 			}
 			if (ans < dp[i]) {
-			ans = max(ans, dp[i]);
+			ans = dp[i];
 			mx_idx = i;
 			}
 		}
