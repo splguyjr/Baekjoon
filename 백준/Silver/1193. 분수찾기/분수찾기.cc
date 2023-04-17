@@ -10,7 +10,8 @@ int main() {
 	int i = 1;
 
 	while (x > i) {
-		x -= i++;
+		x -= i;
+        i++;
 	}
 
 	if (i % 2 == 0) {
