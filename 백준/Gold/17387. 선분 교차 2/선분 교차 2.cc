@@ -47,13 +47,11 @@ int main() {
 			if (D <= C) {
 				swap(C, D);
 			}
-
-			bool flag = true;
+			
 			if (C <= B && A <= D) {
 				cout << 1;
-				flag = false;
 			}
-			if (flag) cout << 0;
+			else cout << 0;
 		}
 
 		else cout << 1;
