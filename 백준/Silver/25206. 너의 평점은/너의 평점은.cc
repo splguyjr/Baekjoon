@@ -1,11 +1,10 @@
 #include <iostream>
 #include <string>
-#include <vector>
 
 using namespace std;
 
-vector<int> v;
-double grade[10] = { 0.0,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5 };
+string grade[9] = { "F","D0","D+","C0","C+","B0","B+","A0","A+" };
+double grade_num[9] = { 0.0,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5 };
 double sum = 0;
 int cnt = 0;
 
@@ -23,32 +22,10 @@ int main() {
 			continue;
 		}
 		cnt += t1;
-		if (g == "A+") {
-			t1 = t1 * 4.5;
-		}
-		else if(g == "A0") {
-			t1 = t1 * 4.0;
-		}
-		else if (g == "B+") {
-			t1 = t1 * 3.5;
-		}
-		else if (g == "B0") {
-			t1 = t1 * 3.0;
-		}
-		else if (g == "C+") {
-			t1 = t1 * 2.5;
-		}
-		else if (g == "C0") {
-			t1 = t1 * 2.0;
-		}
-		else if (g == "D+") {
-			t1 = t1 * 1.5;
-		}
-		else if (g == "D0") {
-			t1 = t1 * 1.0;
-		}
-		else if (g == "F") {
-			t1 = t1 * 0;
+		for (int j = 0; j < 9; j++) {
+			if (grade[j] == g) {
+				t1 = t1 * grade_num[j];
+			}
 		}
 		sum += t1;
 		
