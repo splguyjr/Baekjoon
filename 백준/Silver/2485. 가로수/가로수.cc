@@ -1,53 +1,50 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
+int n;
+vector<int> v;
+vector<int> dist;
+int ans = 0;
+
 int gc(int a, int b) {
-	int c = a%b;
-	while(c!=0) {
+	int c = a % b;
+
+	while (c != 0) {
 		a = b;
 		b = c;
 		c = a % b;
 	}
+	
 	return b;
 }
 
 
-
 int main() {
-	int n;
 	cin >> n;
-	vector<int> tree;
-	vector<int> distance;
-	
-	//tree 벡터에 모든 가로수 위치 넣기
-	int num = 0;
-	for(int i =0; i < n; i++) {
-		int a;
-		cin >> a;
-		tree.push_back(a);
-		
-	}
-	//tree 벡터 크기순으로 정렬
-	sort(tree.begin(), tree.end());
 
-	for(int i =1; i <n; i++) {
-	distance.push_back(tree[i]- tree[i-1]);
-	}
-	
-	int gcd= distance[0];
-	
-	for(int i =1; i<n-2; i++) {
-		gcd = gc(gcd, distance[i]);
-	}
-	
-	int min = (tree[n-1]-tree[0])/gcd;
-	min -= n-1;
-	
+	int temp;
 
-	cout << min;
+	for (int i = 0; i < n; i++) {
+		cin >> temp;
+		v.push_back(temp);
+	}
+
+	for (int i = 1; i < n; i++) {
+		dist.push_back(v[i] - v[i - 1]);
+	}
+	int gcd = dist[0];
 	
+	for (int i = 1; i < n - 1; i++) {
+		gcd = gc(gcd, dist[i]);
+	}
+
+	ans = (v[n - 1] - v[0]) / gcd;
+	ans -= n-1;
+
+	cout << ans;
+
 	return 0;
-	
 }
