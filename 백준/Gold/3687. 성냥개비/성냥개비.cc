@@ -6,7 +6,7 @@ using namespace std;
 
 int t;
 int d[10] = { 2,5,5,4,5,6,3,7,6,6 };
-long long dp[101] = { 0, 0, 1, 7, 4, 2, 6, 8, 10, 18 ,22 ,20 ,28, 68, 88 };
+long long dp[101] = { 0, 0, 1, 7, 4, 2, 6, 8, 10};
 
 void print_min(int n) {
 	cout << dp[n];
@@ -39,11 +39,14 @@ void print_max(int n) {
 }
 
 int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+
 	cin >> t;
 
 	int n;
 
-	for (int i = 15; i <= 100; i++) {
+	for (int i = 9; i <= 100; i++) {
 		long long temp = 1e16;
 		for (int j = 2; j <= 7; j++) {
 			if (j == 2) { temp = min(temp, dp[i - j] * 10 + 1); }
