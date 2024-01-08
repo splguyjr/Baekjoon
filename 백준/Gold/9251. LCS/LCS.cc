@@ -1,33 +1,28 @@
 #include <iostream>
-#include <algorithm>
+#include <string>
 
-using namespace std;
+using namespace std; 
 
+string a, b;
 int dp[1001][1001];
-string x, y;
-
 
 int main() {
-	cin >> x >> y;
-		
-	for (int i = 0; i < x.size(); i++) {
-		for (int j = 0; j < y.size(); j++) {
-			if (x[i] == y[j]) {
-				dp[i + 1][j + 1] = dp[i][j] + 1;
+	cin >> a >> b;
+
+	
+	for (int i = 0; i < a.size(); i++) {
+		for (int j = 0; j < b.size(); j++) {
+			if (a[i] == b[j]) {
+				dp[i+1][j+1] = dp[i][j] + 1;
 			}
 			else {
-				dp[i + 1][j + 1] = max(dp[i + 1][j], dp[i][j + 1]);
+				dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j]);
 			}
-
-
-		} 
-	
+		}
 	}
-
-	cout << dp[x.size()][y.size()];
+		
+	cout << dp[a.size()][b.size()];
 	
-
-
-
 	return 0;
+
 }
