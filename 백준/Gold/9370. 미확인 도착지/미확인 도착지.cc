@@ -10,17 +10,21 @@ int t;
 int np, nl, nd;//교차로, 도로, 도착지 수
 int st, g, h;//시작점, 거쳐야 하는 두 점
 vector<pair<int, int>> graph[2001];
-int dist[2001];//출발점으로부터의 거리를 담는 배열
+int dist_st[2001];//출발점으로부터의 거리를 담는 배열
+int dist_g[2001];
+int dist_h[2001];
 int INF = 10000000;
 
 void initialize() {
 	for (int i = 0; i < 2001; i++) {
 		graph[i].clear();
-		dist[i] = INF;
+		dist_st[i] = INF;
+		dist_g[i] = INF;
+		dist_h[i] = INF;
 	}
 }
 
-void dijk(int x) {
+void dijk(int x, int dist[2001]) {
 	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 	pq.push({ 0, x });
 	dist[x] = 0;
@@ -72,29 +76,18 @@ int main() {
 		for (int i = 0; i < nd; i++) {
 			cin >> dest;
 
-			dijk(st);
-			int st_g = dist[g];
-			int st_h = dist[h];
-			int st_dest = dist[dest];
-
-			for (int i = 1; i <= np; i++) {
-				dist[i] = INF;
-			}
+			dijk(st, dist_st);
+			int st_g = dist_st[g];
+			int st_h = dist_st[h];
+			int st_dest = dist_st[dest];
 			
-			dijk(g);
-			int g_h = dist[h];
-			int g_dest = dist[dest];
-
-			for (int i = 1; i <= np; i++) {
-				dist[i] = INF;
-			}
+			dijk(g, dist_g);
+			int g_h = dist_g[h];
+			int g_dest = dist_g[dest];
 			
-			dijk(h);
-			int h_dest = dist[dest];
+			dijk(h, dist_h);
+			int h_dest = dist_h[dest];
 
-			for (int i = 1; i <= np; i++) {
-				dist[i] = INF;
-			}
 			if (st_dest == st_g + g_h + h_dest) v.push_back(dest);
 			else if (st_dest == st_h + g_h + g_dest) v.push_back(dest);
 		}
