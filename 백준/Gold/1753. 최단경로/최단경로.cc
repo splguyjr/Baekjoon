@@ -25,8 +25,6 @@ void dijstra(int x) {
 
 		pq.pop();
 
-		if (dist[cur] < start_cur_dist) continue;
-
 		for (int i = 0; i < vec[cur].size(); i++) {
 			int next = vec[cur][i].second;
 			int start_next_dist = vec[cur][i].first + start_cur_dist;
