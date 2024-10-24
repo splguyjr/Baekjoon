@@ -1,25 +1,43 @@
 #include <iostream>
-#include <vector>
 
-using namespace std; 
+using namespace std;
+
 int n;
-unsigned long long res;
-bool vis[100000+1];
-int main(){
+int arr[100001];
+bool cnt[100001];
+long long ans;
+
+void input() {
 	cin >> n;
-	vector<int> v(n);
-	for(int i = 0; i < n; i++) cin >> v[i];
-	
-	int start=0, end=0;
-	for(int start = 0; start < n; start++) {
-		while(end < n) {
-			if(vis[v[end]]) break;
-			vis[v[end]]=1;
-			end++; 
-		}
-		res+=(end-start);
-		vis[v[start]]=0;
+
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
 	}
-	cout << res << endl;
+}
+
+void solve() {	
+	int ed = 0;
+	for (int st = 0; st < n; st++) {
+		while (ed < n) {
+			if (cnt[arr[ed]]) break;//현재 수열의 맨 마지막 숫자가 이미 앞에 있었을 경우
+			else {
+				cnt[arr[ed]] = 1;
+				ed++;
+			}
+		}
+		ans += (ed - st);
+		cnt[arr[st]] = 0;
+	}
+}
+
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+
+	input();
+	solve();
+
+	cout << ans;
+
 	return 0;
 }
