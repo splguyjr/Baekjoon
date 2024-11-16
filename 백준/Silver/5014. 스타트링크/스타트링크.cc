@@ -1,37 +1,43 @@
 #include <iostream>
 #include <algorithm>
-#include <cstring>
+#include <queue>
 
 using namespace std;
 
 int f, s, g, u, d;
-int visit_cnt[1000001];
-int ans = 1000000;
+queue<int> q;
+int visited[1000001];
+int dx[2];
 
-void dfs(int n, int cnt) {
-	if (n == g) {
-		ans = min(ans, cnt);
-		return;
+void bfs() {
+	visited[s] = 1;
+	q.push(s);
+
+	while(!q.empty()) {
+		int x = q.front();
+		q.pop();
+		
+		for (int i = 0; i < 2; i++) {
+			int nx = x + dx[i];
+
+			if (nx >= 1 && nx <= f) {
+				if(!visited[nx]) {
+					visited[nx] = visited[x] + 1;
+					q.push(nx);
+				}
+			}
+		}
 	}
-
-	if (n > f || n < 1) return;
-
-	if (visit_cnt[n] > cnt) {
-		visit_cnt[n] = cnt;
-		dfs(n + u, cnt + 1);
-		dfs(n - d, cnt + 1);
-	}
-
-	return;
 }
 
 int main() {
 	cin >> f >> s >> g >> u >> d;
-
-	memset(visit_cnt, 1000000, sizeof(visit_cnt));
-	dfs(s, 0);//1층 시작
-
-	if (ans != 1000000) cout << ans;
+	dx[0] = u;
+	dx[1] = -d;
+	bfs();
+	
+	if (visited[g])
+		cout << visited[g] - 1;
 	else cout << "use the stairs";
 
 	return 0;
