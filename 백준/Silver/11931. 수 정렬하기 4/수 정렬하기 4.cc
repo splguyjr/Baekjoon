@@ -24,17 +24,17 @@ int main() {
 		v.push_back(x);
 	}
 
-	sort(v.begin(), v.end(), compare);
+	//sort(v.begin(), v.end(), compare);
+
+	//for (auto x : v) {
+	//	cout << x << '\n';
+	//}
+	
+	sort(v.begin(), v.end(), greater<int>());
 
 	for (auto x : v) {
 		cout << x << '\n';
 	}
-	
-	/*sort(v.begin(), v.end(), greater<int>());
-
-	for (auto x : v) {
-		cout << x << '\n';
-	}*/
 
 
 	return 0;
