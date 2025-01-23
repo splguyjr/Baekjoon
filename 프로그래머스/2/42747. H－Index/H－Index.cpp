@@ -10,13 +10,8 @@ int solution(vector<int> citations) {
     sort(citations.rbegin(), citations.rend());
     int siz = citations.size();
     
-    //0부터 올라가면서 확인하기
-    //5 4 3 2 1
-    //1
-    //2
-    //3
     for(int i = 1; i<=siz; i++) {
-        int count = 0;
+        int count = 0;//배열 내 i 이상인 개수
         for(int j = 0; j<siz; j++) {
             if(citations[j] < i) {
                 break;
@@ -25,6 +20,7 @@ int solution(vector<int> citations) {
         }
         if(count >= i)
             answer = max(i, answer);
+        else break;
     }
     return answer;
 }
