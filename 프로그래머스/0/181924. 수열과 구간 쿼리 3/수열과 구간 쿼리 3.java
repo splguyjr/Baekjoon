@@ -6,11 +6,8 @@ class Solution {
             int i = x[0];
             int j = x[1];
             
-            int a = arr[i];
-            int b = arr[j];
-            
-            int temp = a;
-            answer[i] = b;
+            int temp = answer[i];
+            answer[i] = answer[j];
             answer[j] = temp;
         }
         return answer;
