@@ -13,37 +13,19 @@ class Solution {
         for(String s : cards2) {
             q2.offer(s);
         }
-        
-        boolean check = true;
-        
-        
+          
         for(String s : goalList) {
-            boolean checkPopped = false;
-            if(!q1.isEmpty()) {
-            if(q1.peek().equals(s)) {
-                System.out.println(q1.poll());
-                checkPopped = true;
-            }}
+            if(s.equals(q1.peek())) 
+                q1.poll();
+
             
-            if(checkPopped) continue;
+            else if (s.equals(q2.peek())) 
+                q2.poll();
             
-            if (!q2.isEmpty()) {
-                if (q2.peek().equals(s)) {
-                System.out.println(q2.poll());
-                checkPopped = true;
-            }}
-            
-            if(!checkPopped) {
-                check = false;
-                break;
-            }
+            else return "No";
         }
         
-        if(check == true) {
-            return "Yes";
-        } else {
-            return "No";
-        }
+        return "Yes";
         
     }
 }
