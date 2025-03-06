@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -43,20 +42,22 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         //첫번째 풍선 터트린 노트값으로 초기화하여 시작
-        Balloon poppedBallon = balloons.pollFirst();
-        int lastNoteValue = poppedBallon.noteValue;
-        sb.append(poppedBallon.order + " ");
 
         while (!balloons.isEmpty()) {
+            int lastNoteValue = balloons.getFirst().noteValue;
+            sb.append(balloons.pollFirst().order);
+
+            if (balloons.isEmpty())
+                break;
+
+            sb.append(" ");
+
             //양수값이면 오른쪽으로 이동하여 터트림
             if(lastNoteValue > 0) {
                 for (int i = 0; i < lastNoteValue - 1; i++) {
                     Balloon balloon = balloons.pollFirst();
                     balloons.addLast(balloon);
                 }
-                poppedBallon = balloons.pollFirst();
-                lastNoteValue = poppedBallon.noteValue;
-                sb.append(poppedBallon.order);
             }
 
             else {
@@ -65,15 +66,7 @@ public class Main {
                     Balloon balloon = balloons.pollLast();
                     balloons.addFirst(balloon);
                 }
-                poppedBallon = balloons.pollFirst();
-                lastNoteValue = poppedBallon.noteValue;
-                sb.append(poppedBallon.order);
             }
-
-            if (balloons.isEmpty())
-                break;
-
-            sb.append(" ");
 
         }
 
