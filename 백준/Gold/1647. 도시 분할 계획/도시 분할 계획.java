@@ -4,32 +4,49 @@ import java.util.*;
 public class Main {
     static int[] parent;
     static Edge[] edges;
-    static BufferedReader br;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    
+    static int N, M;
+
     public static void main(String[] args) throws IOException {
-        br = new BufferedReader(new InputStreamReader(System.in));
-        st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-
-        initialize(N);
-        readEdges(br, M);
-        Arrays.sort(edges);
-
-        long result = kruskalMST(N);
-        System.out.println(result);
+        solve();
     }
 
-    private static void initialize(int n) {
+    private static void solve() throws IOException {
+        readInput();
+        printResult(kruskalMST());
+    }
+
+
+    private static void readInput() throws IOException {
+        readSize();
+        initialize(N, M);
+        readEdges(M);
+    }
+
+    private static void readSize() throws IOException {
+        st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+    }
+
+
+    private static void initialize(int n, int m) {
+        initializeParent(n);
+        initializeEdges(m);
+    }
+    private static void initializeParent(int n) {
         parent = new int[n + 1];
         for (int i = 1; i <= n; i++) {
             parent[i] = i;
         }
     }
 
-    private static void readEdges(BufferedReader br, int m) throws IOException {
+    private static void initializeEdges(int m) {
         edges = new Edge[m];
+    }
+
+    private static void readEdges(int m) throws IOException {
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
@@ -39,21 +56,32 @@ public class Main {
         }
     }
 
-    private static long kruskalMST(int n) {
-        long totalCost = 0;
-        long maxCost = 0;
-        int edgeCount = 0;
+    //totalCost와 maxCost를 동시에 리턴해야 하는 문제점
+    private static long kruskalMST() {
+        long totalCost = 0;     // 현재까지 선택한 간선들의 총 가중치 합
+        int maxCost = 0;        // 현재까지 선택한 간선 중 가장 가중치가 큰 값
+        int edgeCount = 0;      // 현재까지 선택한 간선의 개수
+
+        sortEdges();
 
         for (Edge edge : edges) {
             if (union(edge.a, edge.b)) {
                 totalCost += edge.cost;
                 maxCost = Math.max(maxCost, edge.cost);
                 edgeCount++;
-                if (edgeCount == n - 1) break; // 최소 스패닝 트리 완성
+                if (edgeCount == N - 1) break;
             }
         }
 
-        return totalCost - maxCost; // 가장 비싼 간선을 제거
+        return totalCost - maxCost;
+    }
+
+    private static void printResult(long result) {
+        System.out.println(result);
+    }
+
+    private static void sortEdges() {
+        Arrays.sort(edges);
     }
 
     private static int find(int x) {
@@ -67,7 +95,7 @@ public class Main {
         int rootX = find(x);
         int rootY = find(y);
 
-        if (rootX == rootY) return false; // 같은 집합이면 스킵
+        if (rootX == rootY) return false;
         parent[rootY] = rootX;
         return true;
     }
