@@ -1,21 +1,22 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-    static class Edge{
+    static class Edge implements Comparable<Edge> {
         int ver;
-        Long cost;
+        int cost;
 
-        public Edge(int ver, Long cost) {
+        public Edge(int ver, int cost) {
             this.ver = ver;
             this.cost = cost;
         }
 
+        @Override
+        public int compareTo(Edge o) {
+            return this.cost - o.cost;
+        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -28,9 +29,9 @@ public class Main {
             graph[i] = new ArrayList<>();
         }
 
-        Long[] dist = new Long[N + 1];
+        int[] dist = new int[N + 1];
         for (int i = 1; i <= N; i++) {
-            dist[i] = Long.MAX_VALUE;
+            dist[i] = Integer.MAX_VALUE;
         }
 
         StringTokenizer st;
@@ -38,7 +39,7 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             int start = Integer.parseInt(st.nextToken());
             int end = Integer.parseInt(st.nextToken());
-            Long cost = (long) Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
             graph[start].add(new Edge(end, cost));
         }
 
@@ -46,18 +47,18 @@ public class Main {
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
-        PriorityQueue<Edge> pq = new PriorityQueue<>((e1, e2) -> Math.toIntExact(e1.cost - e2.cost));
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
 
-        pq.offer(new Edge(start, 0L));
-        dist[start] = 0L;
-        
+        pq.offer(new Edge(start, 0));
+        dist[start] = 0;
+
         while (!pq.isEmpty()) {
             Edge poll = pq.poll();
             int curVer = poll.ver;
-            Long curCost = poll.cost;
-            
+            int curCost = poll.cost;
+
             if (dist[curVer] < curCost) continue;
-            
+
             for (Edge edge : graph[curVer]) {
                 if (dist[edge.ver] > curCost + edge.cost) {
                     dist[edge.ver] = curCost + edge.cost;
