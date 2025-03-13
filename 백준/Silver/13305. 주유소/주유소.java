@@ -20,11 +20,11 @@ public class Main {
                 .toArray();
 
         int curCost = 1000000001;
-        int ans = 0;
+        long ans = 0;
         // 앞에서부터 해당 도시의 가격 체크하여 최소면 갱신
         for (int i = 0; i < N - 1; i++) {
             if (cityCost[i] < curCost) curCost = cityCost[i];
-            ans += curCost * dist[i];
+            ans += (long) curCost * dist[i];
         }
 
         System.out.println(ans);
