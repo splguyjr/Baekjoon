@@ -1,34 +1,33 @@
+import java.util.*;
+
 class Solution {
     public int[] solution(int[] answers) {
-        int[] arr1 = {1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5};
-        int[] arr2 = {2,1,2,3,2,4,2,5,2,1,2,3,2,4,2,5,2,1,2,3,2,4,2,5,2,1,2,3,2,4,2,5,2,1,2,3,2,4,2,5};
-        int[] arr3 = {3,3,1,1,2,2,4,4,5,5,3,3,1,1,2,2,4,4,5,5,3,3,1,1,2,2,4,4,5,5,3,3,1,1,2,2,4,4,5,5};
-        int a = 0, b = 0, c = 0;
-        int idx = 0;
+        int[][] patterns = {{1,2,3,4,5},
+                            {2,1,2,3,2,4,2,5},
+                            {3,3,1,1,2,2,4,4,5,5}};
         
-        for(int x : answers) {
-            if(x == arr1[idx%40]) a++;
-            if(x == arr2[idx%40]) b++;
-            if(x == arr3[idx%40]) c++;
-            idx++;
+        int[] count = new int[3];
+        
+        for (int i = 0; i < answers.length; i++) {
+            for (int j = 0; j < patterns.length; j++) {
+                if(answers[i] == patterns[j][i % patterns[j].length])
+                    count[j]++;
+            }
         }
         
-        if(a==b && a==c) {
-            return new int[]{1,2,3};
+        int max = 0;
+        
+        for (int i =0; i < 3; i++)
+            max = Math.max(count[i], max);
+        
+        List<Integer> list = new ArrayList<>();
+        
+        for (int i = 0; i < 3; i++) {
+            if(max == count[i]) list.add(i+1);
         }
-        else if(a==b && b > c) {
-            return new int[]{1,2};
-        }
-        else if(b==c && b > a) {
-            return new int[]{2,3};
-        }
-        else if(c==a && a > b) {
-            return new int[]{1,3};
-        }
-        else {
-            if(a>b && a>c) return new int[]{1};
-            else if(b>c && b>a) return new int[]{2};
-            return new int[]{3};
-        }
+        
+        int[] answer = list.stream().mapToInt(i->i).toArray();
+        
+        return answer;
     }
 }
