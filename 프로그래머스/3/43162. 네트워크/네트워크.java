@@ -7,23 +7,29 @@ class Solution {
         int answer = 0;
         visited = new boolean[n];
         
+        Queue<Integer> q = new LinkedList<>();
+        
         for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
+            if(!visited[i]) {
                 visited[i] = true;
                 answer++;
-                dfs(i, n, computers);
+                q.offer(i);
+            }
+            
+            while (!q.isEmpty()) {
+                int cur = q.poll();
+                
+                for (int j = 0; j < n; j++) {
+                    if (computers[cur][j] == 1 && !visited[j]) {
+                        visited[j] = true;
+                        q.offer(j);
+                    }
+                }
             }
         }
         
         return answer;
     }
     
-    public void dfs(int x, int n, int[][] computers) {
-        for (int i = 0; i < n; i++) {
-            if (computers[x][i] == 1 && !visited[i]) {
-                visited[i] = true;
-                dfs(i, n, computers);
-            }   
-        }
-    }
+
 }
