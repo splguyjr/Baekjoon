@@ -10,7 +10,6 @@ public class Main {
     static int[][] map;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    static Queue<Node> q = new LinkedList<>();
     static int[] dx = {-1, 0, 0, 1};
     static int[] dy = {0, -1, 1, 0};
     static int answer = 0;
@@ -53,6 +52,8 @@ public class Main {
     }
 
     private static void bfs() {
+        Queue<Node> q = new LinkedList<>();
+
         int[][] map_copy = new int[n][m];
 
         for (int i = 0; i < n; i++) {
@@ -95,11 +96,9 @@ public class Main {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (map[i][j] == 0) {
-                    depth++;
                     map[i][j] = 1;
-                    dfs(depth);
+                    dfs(depth + 1);
                     map[i][j] = 0;
-                    depth--;
                 }
             }
         }
