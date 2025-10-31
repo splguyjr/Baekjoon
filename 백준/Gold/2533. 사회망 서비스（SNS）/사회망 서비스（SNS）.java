@@ -16,7 +16,7 @@ public class Main {
     private static void readInput() throws IOException {
         n = Integer.parseInt(br.readLine());
 
-        dp = new int[n + 1][3];
+        dp = new int[n + 1][2];
 
         for (int i = 0; i <= n; i++) {
             tree.add(new ArrayList<>());
