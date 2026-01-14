@@ -116,38 +116,36 @@ public class Main {
         return copyArr;
     }
 
-    private static void bfs2(int x, int y, int[][] visitArr) {
-        Deque<int[]> q = new ArrayDeque<>();
-        q.addLast(new int[]{x, y, 0});
-        int islandNum = visitArr[x][y];
-        visitArr[x][y] = 1;
+    private static void bfs2(int x, int y, int[][] labelArr) {
+        Queue<int[]> q = new LinkedList<>();
+        boolean[][] seen = new boolean[n][n];
+
+        int islandNum = labelArr[x][y];
+        q.offer(new int[]{x, y, 0});
+        seen[x][y] = true;
 
         while (!q.isEmpty()) {
             int[] cur = q.poll();
+            int cx = cur[0];
+            int cy = cur[1];
+            int cnt = cur[2];
+
+            if (cnt >= ans) continue;
 
             for (int i = 0; i < 4; i++) {
-                int nx = cur[0] + dx[i];
-                int ny = cur[1] + dy[i];
-                int cnt = cur[2];
+                int nx = cx + dx[i];
+                int ny = cy + dy[i];
 
-                if (isInRange(nx, ny)) {
-                    // 다음 이동 위치가 시작한 섬 번호도 아니고, 방문하지도 않았으며, 빈 곳도 아니라면
-                    // 이웃 섬에 도착하였으므로 값 갱신
-                    if (visitArr[nx][ny] != islandNum && visitArr[nx][ny] != 1 && visitArr[nx][ny] != 0) {
-                        ans = Math.min(ans, cnt);
-                    }
+                if (!isInRange(nx, ny) || seen[nx][ny]) continue;
 
-                    // 현재 섬안에서 이동하는 경우
-                    else if (visitArr[nx][ny] == islandNum && cnt == 0) {
-                        q.addFirst(new int[]{nx, ny, cnt});
-                        visitArr[nx][ny] = 1; // 방문 처리는 1로
-                    }
-
-                    // 섬 밖에서 이동하는 경우, cnt + 1
-                    else if (visitArr[nx][ny] == 0) {
-                        q.addLast(new int[]{nx, ny, cnt + 1});
-                        visitArr[nx][ny] = 1;
-                    }
+                if (labelArr[nx][ny] != 0 && labelArr[nx][ny] != islandNum) {
+                    ans = Math.min(ans, cnt);
+                } else if (labelArr[nx][ny] == islandNum && cnt == 0) {
+                    seen[nx][ny] = true;
+                    q.offer(new int[]{nx, ny, cnt});
+                } else if (labelArr[nx][ny] == 0) {
+                    seen[nx][ny] = true;
+                    q.offer(new int[]{nx, ny, cnt + 1});
                 }
             }
         }
