@@ -50,9 +50,7 @@ public class Main {
         for (int i = 1; i <= 2000000; i++) {
             int cnt = 0;
             for (int j = 1; i * j <= 2000000; j++) {
-                if (freq[i * j] != 0) {
-                    cnt += freq[i * j];
-                }
+                cnt += freq[i * j];
             }
 
             if (cnt >= 2) {
