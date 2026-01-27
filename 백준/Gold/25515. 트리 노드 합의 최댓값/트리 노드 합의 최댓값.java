@@ -45,8 +45,6 @@ public class Main {
     }
 
     private static void dfs(int idx, int prev) {
-        if (dp[idx] != 0) return;
-
         dp[idx] = score[idx];
 
         for (int adjIdx : tree.get(idx)) {
