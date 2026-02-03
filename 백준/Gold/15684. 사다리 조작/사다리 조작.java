@@ -86,7 +86,7 @@ public class Main {
     private static boolean isAvailableLine(int r, int c) {
         if (map[r][c + 1] == 1) return false;
         else if (map[r][c] == 1) return false;
-        else if (c > 1 && map[r][c - 1] == 1) return false;
+        else if (map[r][c - 1] == 1) return false;
         return true;
     }
 
