@@ -69,11 +69,13 @@ public class Main {
         }
 
         for (int i = r; i <= h; i++) {
-            for (int j = 1; j <= n - 1; j++) {
+            int start = (i == r ? c : 1); // 이전 위치와 다른 행이면 열 위치 1부터 탐색
+            for (int j = start; j <= n - 1; j++) {
                 if (isAvailableLine(i, j)) {
                     map[i][j] = 1;
                     map[i][j + 1] = -1;
-                    dfs(i, j, cnt + 1);
+                    // 같은 행이면 j+2부터(인접 불가), 다음 행으로 넘어가면 1부터
+                    dfs(i, j + 2, cnt + 1);
                     map[i][j] = 0;
                     map[i][j + 1] = 0;
                 }
