@@ -84,7 +84,7 @@ public class Main {
     private static void calcMinPrice() {
         for (int i = 1; i <= n; i++) {
             int cnt = prefix[i];
-            int price = Math.min(charge[i][0] * cnt, charge[i][2] + charge[i][1] * cnt);
+            long price = Math.min((long)charge[i][0] * cnt, charge[i][2] + (long)charge[i][1] * cnt);
             ans += price;
         }
     }
