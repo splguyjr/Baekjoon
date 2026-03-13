@@ -6,7 +6,9 @@ import java.util.StringTokenizer;
 public class Main {
 
     static int a, b, c;
-    static int[][][][] dp; // t, a, b, c -> t턴에 F가 가져갈 수 있는 최대 개수
+    static int[][][][] dp; // t, a, b, c ->
+    //턴 t에서 현재 플레이어가 앞으로 게임을 진행했을 때 얻을 수 있는
+    //(자기 돌 − 상대 돌) 의 최대 advantage
 
     private static void readInput() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -32,50 +34,29 @@ public class Main {
     private static int dp(int t, int a, int b, int c) {
         if (dp[t][a][b][c] != -1) return dp[t][a][b][c];
         if (a == 0 && b == 0 && c == 0) return 0;
-        int res;
-        if (t % 2 == 1) {
-            res = 0;
-            if (a > 0) {
-                int x = Math.min(t, a);
-                res = Math.max(res, x + dp(t + 1, a - x, b, c));
-            }
+        int res = Integer.MIN_VALUE;
 
-            if (b > 0) {
-                int x = Math.min(t, b);
-                res = Math.max(res, x + dp(t + 1, a, b - x, c));
-            }
+        if (a > 0) {
+            int x = Math.min(t, a);
+            res = Math.max(res, x - dp(t + 1, a - x, b, c));
+        }
 
-            if (c > 0) {
-                int x = Math.min(t, c);
-                res = Math.max(res, x + dp(t + 1, a, b, c - x));
-            }
-        } else {
-            res = Integer.MAX_VALUE;
-            if (a > 0) {
-                int x = Math.min(t, a);
-                res = Math.min(res, dp(t + 1, a - x, b, c));
-            }
+        if (b > 0) {
+            int x = Math.min(t, b);
+            res = Math.max(res, x - dp(t + 1, a, b - x, c));
+        }
 
-            if (b > 0) {
-                int x = Math.min(t, b);
-                res = Math.min(res, dp(t + 1, a, b - x, c));
-            }
-
-            if (c > 0) {
-                int x = Math.min(t, c);
-                res = Math.min(res, dp(t + 1, a, b, c - x));
-            }
+        if (c > 0) {
+            int x = Math.min(t, c);
+            res = Math.max(res, x - dp(t + 1, a, b, c - x));
         }
 
         return dp[t][a][b][c] = res;
     }
 
     private static void printResult(int f) {
-        int total = a + b + c;
-        int s = total - f;
-
-        if (f > s) System.out.println("F");
-        else if (s > f) System.out.println("S");
+        if (f > 0) System.out.println("F");
+        else if (f < 0) System.out.println("S");
         else System.out.println("D");
     }
 
