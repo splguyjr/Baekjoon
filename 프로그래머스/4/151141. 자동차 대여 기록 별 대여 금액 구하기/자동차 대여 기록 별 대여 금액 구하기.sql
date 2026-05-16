@@ -1,0 +1,19 @@
+SELECT HISTORY_ID,
+       ROUND(
+           A.DAILY_FEE
+           * (DATEDIFF(B.END_DATE, B.START_DATE) + 1)
+           * (1 - COALESCE(D.DISCOUNT_RATE, 0) / 100),
+           0
+       ) AS FEE
+  FROM CAR_RENTAL_COMPANY_CAR A
+  JOIN CAR_RENTAL_COMPANY_RENTAL_HISTORY B
+    ON A.CAR_ID = B.CAR_ID
+  LEFT JOIN CAR_RENTAL_COMPANY_DISCOUNT_PLAN D
+    ON A.CAR_TYPE = D.CAR_TYPE
+   AND D.DURATION_TYPE = CASE
+                           WHEN DATEDIFF(B.END_DATE, B.START_DATE) + 1 >= 90 THEN '90일 이상'
+                           WHEN DATEDIFF(B.END_DATE, B.START_DATE) + 1 >= 30 THEN '30일 이상'
+                           WHEN DATEDIFF(B.END_DATE, B.START_DATE) + 1 >= 7  THEN '7일 이상'
+                         END
+ WHERE A.CAR_TYPE = '트럭'
+ ORDER BY FEE DESC, HISTORY_ID DESC
